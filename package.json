@@ -1,6 +1,6 @@
 {
   "name": "assetflow-cli",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "Install once. Never think about image optimization again.",
   "main": "dist/index.js",
   "bin": {
