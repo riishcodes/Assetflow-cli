@@ -12,8 +12,8 @@ import type { FolderBreakdownItem } from '../core/doctor-engine.js';
 let activeSpinner: Ora | null = null;
 let animationsEnabled = true;
 
-// Premium Gradient definition (Cyan -> Blue -> Purple)
-const themeGradient = gradient(['#06b6d4', '#3b82f6', '#a855f7']);
+// Premium Gradient definition (Purple-Blue #5E6AD2 -> White)
+const themeGradient = gradient(['#5E6AD2', '#FFFFFF']);
 
 export function setAnimationsEnabled(enabled: boolean): void {
   animationsEnabled = enabled;
@@ -69,42 +69,25 @@ export function updateSpinner(text: string): void {
 }
 
 /**
- * Renders the large responsive branding header with option 1 ASCII art.
+ * Renders the large responsive branding header with the #5E6AD2 to White gradient wordmark.
  */
 export function renderBrandingHeader(): void {
-  const cols = process.stdout.columns || 101;
-  let logo = '';
-  if (cols > 100) {
-    logo = `█████╗ ███████╗███████╗███████╗████████╗███████╗██╗     ███████╗██╗      ██████╗ ██╗    ██╗
-██╔══██╗██╔════╝██╔════╝██╔════╝╚══██╔══╝██╔════╝██║     ██╔════╝██║     ██╔═══██╗██║    ██║
-███████║███████╗███████╗█████╗     ██║   █████╗  ██║     █████╗  ██║     ██║   ██║██║ █╗ ██║
-██╔══██║╚════██║╚════██║██╔══╝     ██║   ██╔══╝  ██║     ██╔══╝  ██║     ██║   ██║██║███╗██║
-██║  ██║███████║███████║███████╗   ██║   ██║     ███████╗██║     ███████╗╚██████╔╝╚███╔███╔╝
-╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝   ╚═╝   ╚═╝     ╚══════╝╚═╝     ╚══════╝ ╚═════╝  ╚══╝╚══╝`;
-  } else {
-    logo = 'AssetFlow';
-  }
+  const logo = 'AssetFlow';
+  const colorizedLogo = colorizeGradient(logo);
 
-  const grad = gradient(['#38BDF8', '#60A5FA', '#FFFFFF']);
-  const colorizedLogo = animationsEnabled ? grad.multiline(logo) : logo;
-
-  console.log(colorizedLogo);
-  console.log('');
-  console.log(chalk.white('Image Performance CLI'));
-  console.log('');
-  console.log(chalk.gray('Install once. Never think about image optimization again.'));
-  console.log('');
-  console.log(chalk.gray('────────────────────────────────────────────'));
-  console.log('');
+  console.log(`\n  ${chalk.bold(colorizedLogo)}`);
+  console.log(`  ${chalk.white('Image Performance CLI')}`);
+  console.log(`  ${chalk.gray('Install once. Never think about image optimization again.')}`);
+  console.log(`  ${chalk.gray('────────────────────────────────────────────')}\n`);
 }
 
 /**
  * Renders the compact version of the header.
  */
 export function renderCompactHeader(version = '1.0.0'): void {
-  console.log(chalk.bold(`AssetFlow v${version}`));
-  console.log(chalk.gray('────────────────────────────'));
-  console.log('');
+  const brand = colorizeGradient('AssetFlow');
+  console.log(`  ${chalk.bold(`${brand} v${version}`)}`);
+  console.log(`  ${chalk.gray('────────────────────────────')}\n`);
 }
 
 /**
